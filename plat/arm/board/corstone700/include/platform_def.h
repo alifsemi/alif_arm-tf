@@ -10,6 +10,8 @@
 #include <lib/utils_def.h>
 #include <plat/arm/board/common/v2m_def.h>
 
+#define PLAT_ARM_CORSTONE700
+
 #define CORSTONE700_MAX_CPUS_PER_CLUSTER	4
 #define PLAT_ARM_CLUSTER_COUNT		1
 #define CORSTONE700_MAX_PE_PER_CPU	1

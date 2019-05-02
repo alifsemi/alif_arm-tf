@@ -1,8 +1,9 @@
 /*
- * Copyright (c) 2015-2018, ARM Limited and Contributors. All rights reserved.
+ * Copyright (c) 2015-2019, ARM Limited and Contributors. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #ifndef ARM_DEF_H
 #define ARM_DEF_H
 
@@ -52,7 +53,11 @@
 #define ARM_DRAM_ID			2
 
 /* The first 4KB of Trusted SRAM are used as shared memory */
+#ifdef PLAT_ARM_CORSTONE700
+#define ARM_TRUSTED_SRAM_BASE		UL(0x02000000)
+#else
 #define ARM_TRUSTED_SRAM_BASE		UL(0x04000000)
+#endif
 #define ARM_SHARED_RAM_BASE		ARM_TRUSTED_SRAM_BASE
 #define ARM_SHARED_RAM_SIZE		UL(0x00001000)	/* 4 KB */
 
@@ -290,9 +295,15 @@
 					 ARM_BL_REGIONS)
 
 /* Memory mapped Generic timer interfaces  */
+#ifdef PLAT_ARM_CORSTONE700
+#define ARM_SYS_CNTCTL_BASE             UL(0x1a200000)
+#define ARM_SYS_CNTREAD_BASE            UL(0x1a210000)
+#define ARM_SYS_TIMCTL_BASE             UL(0x1a220000)
+#else
 #define ARM_SYS_CNTCTL_BASE		UL(0x2a430000)
 #define ARM_SYS_CNTREAD_BASE		UL(0x2a800000)
 #define ARM_SYS_TIMCTL_BASE		UL(0x2a810000)
+#endif
 #define ARM_SYS_CNT_BASE_S		UL(0x2a820000)
 #define ARM_SYS_CNT_BASE_NS		UL(0x2a830000)
 
