@@ -6,13 +6,15 @@
 
 CORSTONE700_CPU_SOURCES	+=	lib/cpus/aarch32/cortex_a32.S
 
-BL1_SOURCES		+=	${CORSTONE700_CPU_SOURCES}
+BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c
 
-PLAT_INCLUDES		:=	-Iplat/arm/board/corstone700/include
+PLAT_INCLUDES		:=      -Iplat/arm/board/corstone700/include \
+					-Iinclude/plat/arm/common/ \
+					-Iplat/arm/board/corstone700/drivers/mhu/
 
 NEED_BL32		:=	yes
 
-CORSTONE700_GIC_SOURCES      :=	drivers/arm/gic/common/gic_common.c     \
+CORSTONE700_GIC_SOURCES :=	drivers/arm/gic/common/gic_common.c     \
 				drivers/arm/gic/v2/gicv2_main.c         \
 				drivers/arm/gic/v2/gicv2_helpers.c      \
 				plat/common/plat_gicv2.c                \

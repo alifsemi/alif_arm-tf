@@ -81,6 +81,11 @@
 #define PLAT_ARM_GICD_BASE              0x1C010000
 #define PLAT_ARM_GICC_BASE              0x1C02F000
 
+
+/* MHUv2 Secure Channel receiver and sender */
+#define PLAT_SDK700_MHU0_SEND            0x1B800000
+#define PLAT_SDK700_MHU0_RECV            0x1B810000
+
 #define CORSTONE700_IRQ_TZ_WDOG		64
 #define CORSTONE700_IRQ_SEC_SYS_TIMER	65
 /*

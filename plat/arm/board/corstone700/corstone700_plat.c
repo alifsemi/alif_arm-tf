@@ -9,6 +9,7 @@
 #include <plat/arm/common/plat_arm.h>
 #include <plat/common/platform.h>
 #include <platform_def.h>
+#include <mhu.h>
 
 /*
  * Table of regions to map using the MMU.
@@ -25,4 +26,5 @@ const mmap_region_t plat_arm_mmap[] = {
 /* Nothing to do*/
 void __init plat_arm_pwrc_setup(void)
 {
+	mhu_secure_init();
 }
