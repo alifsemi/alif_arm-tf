@@ -235,7 +235,13 @@ ERRORS := -Werror
 endif
 
 CPPFLAGS		=	${DEFINES} ${INCLUDES} ${MBEDTLS_INC} -nostdinc		\
-				-Wmissing-include-dirs $(ERRORS) $(WARNINGS)
+				-Wmissing-include-dirs $(ERRORS) $(WARNINGS) \
+				-D_FORTIFY_SOURCE=2 \
+				-D_GLIBCXX_ASSERTIONS -fpic -shared \
+				-Wformat -Werror=format-security \
+				-Werror=implicit-function-declaration -pipe \
+				-grecord-gcc-switches \
+				-Wl,-z,defs -Wl,-z,now -Wl,-z,relro
 ASFLAGS			+=	$(CPPFLAGS) $(ASFLAGS_$(ARCH))			\
 				-D__ASSEMBLY__ -ffreestanding 			\
 				-Wa,--fatal-warnings
