@@ -11,6 +11,7 @@ BL32_SOURCES		+=	drivers/cfi/v2m/v2m_flash.c				\
 				plat/arm/board/corstone700/corstone700_topology.c			\
 				plat/arm/board/corstone700/corstone700_security.c			\
 				plat/arm/board/corstone700/corstone700_plat.c			\
+				plat/arm/board/corstone700/corstone700_stack_protector.c	\
 				plat/arm/board/corstone700/corstone700_pm.c			\
 				plat/arm/board/corstone700/sp_min/corstone700_sp_min_setup.c	\
 				${CORSTONE700_CPU_SOURCES}					\
