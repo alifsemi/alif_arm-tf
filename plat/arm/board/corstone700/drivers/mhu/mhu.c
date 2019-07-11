@@ -29,7 +29,7 @@ ARM_INSTANTIATE_LOCK;
  */
 #define MHU_MAX_SLOT_ID		30
 
-void mhu_secure_message_start(unsigned int address , unsigned int slot_id)
+void mhu_secure_message_start(unsigned int address, unsigned int slot_id)
 {
 	assert(slot_id <= MHU_MAX_SLOT_ID);
 	arm_lock_get();
@@ -39,20 +39,22 @@ void mhu_secure_message_start(unsigned int address , unsigned int slot_id)
 						(1 << slot_id));
 }
 
-void mhu_secure_message_send(unsigned int address,unsigned int slot_id, uint32_t message)
+void mhu_secure_message_send(unsigned int address, unsigned int slot_id,
+		uint32_t message)
 {
 	assert(slot_id <= MHU_MAX_SLOT_ID);
 	assert(!(mmio_read_32(address + CPU_INTR_S_STAT) &
 						(1 << slot_id)));
 
 	MHU_V2_ACCESS_REQUEST(address);
-	while (MHU_V2_IS_ACCESS_READY(address) == 0);
+	while (MHU_V2_IS_ACCESS_READY(address) == 0)
+		;
 
 	mmio_write_32(address + CPU_INTR_S_SET, message);
 
 }
 
-void mhu_secure_message_end(unsigned int address,unsigned int slot_id)
+void mhu_secure_message_end(unsigned int address, unsigned int slot_id)
 {
 	assert(slot_id <= MHU_MAX_SLOT_ID);
 	/*

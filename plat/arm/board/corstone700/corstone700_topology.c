@@ -8,7 +8,8 @@
 #include <plat/common/platform.h>
 
 /* The CORSTONE700 power domain tree descriptor */
-static unsigned char corstone700_power_domain_tree_desc[PLAT_ARM_CLUSTER_COUNT + 2];
+static unsigned char corstone700_power_domain_tree_desc[PLAT_ARM_CLUSTER_COUNT
+							+ 2];
 /*******************************************************************************
  * This function dynamically constructs the topology according to
  * CLUSTER_COUNT and returns it.

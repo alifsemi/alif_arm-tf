@@ -20,8 +20,8 @@
 	};
 
 	cpus {
-                #address-cells = <1>;
-                #size-cells = <0>;
+		#address-cells = <1>;
+		#size-cells = <0>;
 
 		cpu@0 {
 			device_type = "cpu";
@@ -33,11 +33,11 @@
 	};
 
 	memory@2000000 {
-                device_type = "memory";
+		device_type = "memory";
 		reg = <0x02000000 0x02000000>;
 	};
 
-        gic: interrupt-controller@1c000000 {
+	gic: interrupt-controller@1c000000 {
 		compatible = "arm,gic-400";
 		#interrupt-cells = <3>;
 		#address-cells = <0>;
@@ -47,7 +47,7 @@
 			<0x1c04f000 0x1000>,
 			<0x1c06f000 0x2000>;
 		interrupts = <1 9 0xf08>;
-        };
+	};
 
 	L2_0: l2-cache0 {
 		compatible = "cache";
@@ -89,7 +89,7 @@
 
 	timer {
 		compatible = "arm,armv8-timer";
-		interrupts = 	<1 13 0xf08>,
+		interrupts =	<1 13 0xf08>,
 				<1 14 0xf08>,
 				<1 11 0xf08>,
 				<1 10 0xf08>;

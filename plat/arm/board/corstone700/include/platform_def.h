@@ -16,10 +16,10 @@
 #define PLAT_ARM_CLUSTER_COUNT		1
 #define CORSTONE700_MAX_PE_PER_CPU	1
 #define PLATFORM_CORE_COUNT		(PLAT_ARM_CLUSTER_COUNT *       \
-                                        CORSTONE700_MAX_CPUS_PER_CLUSTER *   \
-                                        CORSTONE700_MAX_PE_PER_CPU)
+					CORSTONE700_MAX_CPUS_PER_CLUSTER *   \
+					CORSTONE700_MAX_PE_PER_CPU)
 
-#define PLAT_MAX_PWR_LVL 		2
+#define PLAT_MAX_PWR_LVL		2
 
 #define PLAT_ARM_TRUSTED_MAILBOX_BASE	ARM_TRUSTED_SRAM_BASE
 #define PLAT_ARM_NSTIMER_FRAME_ID	U(1)
@@ -73,9 +73,9 @@
 #define CORSTONE700_DEVICE_BASE		(0x1A000000)
 #define CORSTONE700_DEVICE_SIZE		(0x26000000)
 #define CORSTONE700_MAP_DEVICE                       MAP_REGION_FLAT(        \
-                                                CORSTONE700_DEVICE_BASE,      \
-                                                CORSTONE700_DEVICE_SIZE,      \
-                                                MT_DEVICE | MT_RW | MT_SECURE)
+						CORSTONE700_DEVICE_BASE,      \
+						CORSTONE700_DEVICE_SIZE,      \
+						MT_DEVICE | MT_RW | MT_SECURE)
 
 /* GIC related constants */
 #define PLAT_ARM_GICD_BASE              0x1C010000
@@ -94,10 +94,10 @@
  * as Group 0 interrupts.
  */
 #define PLAT_ARM_G1S_IRQ_PROPS(grp) \
-        ARM_G1S_IRQ_PROPS(grp), \
-        INTR_PROP_DESC(CORSTONE700_IRQ_TZ_WDOG, GIC_HIGHEST_SEC_PRIORITY, (grp), \
-                        GIC_INTR_CFG_LEVEL), \
-        INTR_PROP_DESC(CORSTONE700_IRQ_SEC_SYS_TIMER, GIC_HIGHEST_SEC_PRIORITY, (grp), \
-                        GIC_INTR_CFG_LEVEL)
+	ARM_G1S_IRQ_PROPS(grp), \
+	INTR_PROP_DESC(CORSTONE700_IRQ_TZ_WDOG, GIC_HIGHEST_SEC_PRIORITY, \
+			(grp), GIC_INTR_CFG_LEVEL), \
+	INTR_PROP_DESC(CORSTONE700_IRQ_SEC_SYS_TIMER, \
+			GIC_HIGHEST_SEC_PRIORITY, (grp), GIC_INTR_CFG_LEVEL)
 
 #define PLAT_ARM_G0_IRQ_PROPS(grp)      ARM_G0_IRQ_PROPS(grp)
