@@ -14,9 +14,10 @@
 	#size-cells = <1>;
 
 	chosen {
-		bootargs = "console=ttyAMA0 root=/dev/vda2 rw loglevel=9";
-		linux,initrd-start = <0x80A00000>;
-		linux,initrd-end = <0x80C00000>;
+		bootargs = "console=ttyAMA0 \
+		root=mtd:physmap-flash.0 \
+		ro \
+		loglevel=9";
 	};
 
 	cpus {
