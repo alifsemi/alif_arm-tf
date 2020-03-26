@@ -6,6 +6,8 @@
 
 /dts-v1/;
 
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
 / {
 	model = "corstone700";
 	compatible = "arm,Corstone-700";
@@ -17,7 +19,8 @@
 		bootargs = "console=ttyAMA0 \
 		root=mtd:physmap-flash.0 \
 		ro \
-		loglevel=9";
+		loglevel=9 \
+		ip=dhcp";
 	};
 
 	cpus {
@@ -167,4 +170,13 @@
 		reg-names = "rstreg", "streg";
 	};
 
+	ethernet: eth@40100000 {
+		compatible = "smsc,lan9115";
+		reg = <0x40100000 0x200000>;
+		phy-mode = "mii";
+		interrupt-parent = <&gic>;
+		interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_LOW>;
+		reg-io-width = <4>;
+		smsc,irq-push-pull;
+	};
 };
