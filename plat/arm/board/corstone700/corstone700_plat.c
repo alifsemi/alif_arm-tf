@@ -28,3 +28,8 @@ void __init plat_arm_pwrc_setup(void)
 {
 	mhu_secure_init();
 }
+
+unsigned int plat_get_syscnt_freq2(void)
+{
+	return FPGA_TIMER_BASE_FREQUENCY;
+}
