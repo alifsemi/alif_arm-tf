@@ -33,3 +33,11 @@ unsigned int plat_get_syscnt_freq2(void)
 {
 	return FPGA_TIMER_BASE_FREQUENCY;
 }
+
+#ifdef PLAT_ARM_BOLT_FPGA
+unsigned int plat_get_syscnt_freq2(void)
+{
+	/* Returns 10Mhz as timer base frequency */
+	return BOLT_FPGA_TIMER_BASE_FREQUENCY;
+}
+#endif

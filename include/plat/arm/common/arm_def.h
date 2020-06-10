@@ -54,7 +54,9 @@
 
 /* The first 4KB of Trusted SRAM are used as shared memory */
 #ifdef PLAT_ARM_CORSTONE700
+#ifndef ARM_TRUSTED_SRAM_BASE
 #define ARM_TRUSTED_SRAM_BASE		UL(0x02000000)
+#endif /* !ARM_TRUSTED_SRAM_BASE */
 #else
 #define ARM_TRUSTED_SRAM_BASE		UL(0x04000000)
 #endif
