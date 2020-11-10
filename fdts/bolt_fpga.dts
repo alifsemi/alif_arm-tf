@@ -142,6 +142,18 @@
 		mbox-name = "arm-es0-mhu1";
 	};
 
+	mbox_semhu0: mhu@1b800000 {
+		compatible = "arm,mhuv2","arm,primecell";
+		reg = <0x1b800000 0x1000>,
+		      <0x1b810000 0x1000>;
+		clocks = <&refclk100mhz>;
+		clock-names = "apb_pclk";
+		interrupts = <0 10 4>;
+		interrupt-names = "mhu_rx";
+		#mbox-cells = <1>;
+		mbox-name = "arm-se-mhu0";
+	};
+
 	mbox_semhu1: mhu@1b820000 {
 		compatible = "arm,mhuv2","arm,primecell";
 		reg = <0x1b820000 0x1000>,
@@ -156,8 +168,8 @@
 
 	client {
 		compatible = "arm,client";
-		mboxes = <&mbox_es0mhu0 0>, <&mbox_es0mhu1 0>, <&mbox_semhu1 0>;
-		mbox-names = "es0mhu0", "es0mhu1", "semhu1";
+		mboxes = <&mbox_es0mhu0 0>, <&mbox_es0mhu1 0>, <&mbox_semhu0 0>, <&mbox_semhu1 0>;
+		mbox-names = "es0mhu0", "es0mhu1", "semhu0", "semhu1";
 	};
 
 	extsys0: extsys@1A010310 {
