@@ -179,4 +179,87 @@
 		reg-names = "rstreg", "streg";
 	};
 
+	tes_dhd_0: gpu@0 {
+                                compatible = "tes,tes_dhd-1.0", "tes,dhd-1.0";
+                                reg = <0x00000000 0x00004000>;
+
+                                interrupt-parent = <&gic>;
+                                interrupts = <0 41 4>;
+                        };
+
+	lvds-encoder {
+        compatible = "lvds-encoder";
+
+        width-mm = <108>;
+        height-mm = <65>;
+
+		panel-timing {
+          clock-frequency = <33000000>;
+          hactive = <800>;
+          vactive = <480>;
+          hfront-porch = <210>;
+          hback-porch = <46>;
+          hsync-len = <3>;
+          vback-porch = <23>;
+          vfront-porch = <22>;
+          vsync-len = <3>;
+
+          hsync-active = <0>;
+          vsync-active = <0>;
+          de-active = <1>;
+          pixelclk-active = <1>;
+        };
+
+        ports {
+          port@0 {
+            lvdsenc_in: endpoint {
+              remote-endpoint = <&cdc_out_rgb>;
+            };
+          };
+        };
+      };
+
+	tes_cdc_0: lcd_controller@4000 {
+                                compatible = "tes,tes_cdc-2.1", "tes,cdc-2.1";
+                                reg = <0x00004000 0x00002000>;
+                                interrupt-parent = <&gic>;
+                                interrupts = <0 40 4>;
+
+                                clocks = <&pixel_clock>;
+
+                                max-clock-frequency = <108000000>;
+
+                                ports {
+                                        port@0 {
+                                                cdc_out_rgb: endpoint {
+                                                        remote-endpoint = <&lvdsenc_in>;
+                                                };
+                                        };
+                                };
+                        }; //end lcd_controller@0x00000000 (tes_cdc_0)
+
+
+        tes_warp_0: video@6000 {
+                                compatible = "tes,tes_dhd-1.0", "tes,dhd-1.0";
+                                reg = <0x00006000 0x00000200>;
+
+                                interrupt-parent = <&gic>;
+                                interrupts = <0 43 4>;
+                        };
+
+						tes_d2d_0: gpu@6200 {
+                                compatible = "tes,tes_d2d-1.0", "tes,d2d-1.0";
+                                reg = <0x00006200 0x00000100>;
+
+                                interrupt-parent = <&gic>;
+                                interrupts = <0 42 4>;
+                        };
+
+       pixel_clock: oscillator {
+                                compatible = "fixed-clock";
+                                #clock-cells = <0>;
+                                clock-frequency = <33000000>;
+                        };
+
+
 };
