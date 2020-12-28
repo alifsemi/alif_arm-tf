@@ -120,7 +120,7 @@
 			};
 		};
 
-	mbox_es0mhu0: mhu@1b000000 {
+	mbox_m55_hp_mhu0: mhu@1b000000 {
 		compatible = "arm,mhuv2","arm,primecell";
 		reg = <0x1b000000 0x1000>,
 		      <0x1b010000 0x1000>;
@@ -129,10 +129,10 @@
 		interrupts = <0 12 4>;
 		interrupt-names = "mhu_rx";
 		#mbox-cells = <1>;
-		mbox-name = "arm-es0-mhu0";
+		mbox-name = "arm-m55_hp-mhu0";
 	};
 
-	mbox_es0mhu1: mhu@1b020000 {
+	mbox_m55_hp_mhu1: mhu@1b020000 {
 		compatible = "arm,mhuv2","arm,primecell";
 		reg = <0x1b020000 0x1000>,
 		      <0x1b030000 0x1000>;
@@ -141,10 +141,10 @@
 		interrupts = <0 47 4>;
 		interrupt-names = "mhu_rx";
 		#mbox-cells = <1>;
-		mbox-name = "arm-es0-mhu1";
+		mbox-name = "arm-m55_hp-mhu1";
 	};
 
-	mbox_semhu0: mhu@1b800000 {
+	mbox_se_mhu0: mhu@1b800000 {
 		compatible = "arm,mhuv2","arm,primecell";
 		reg = <0x1b800000 0x1000>,
 		      <0x1b810000 0x1000>;
@@ -156,7 +156,7 @@
 		mbox-name = "arm-se-mhu0";
 	};
 
-	mbox_semhu1: mhu@1b820000 {
+	mbox_se_mhu1: mhu@1b820000 {
 		compatible = "arm,mhuv2","arm,primecell";
 		reg = <0x1b820000 0x1000>,
 		      <0x1b830000 0x1000>;
@@ -170,11 +170,11 @@
 
 	client {
 		compatible = "arm,client";
-		mboxes = <&mbox_es0mhu0 0>, <&mbox_es0mhu1 0>, <&mbox_semhu0 0>, <&mbox_semhu1 0>;
-		mbox-names = "es0mhu0", "es0mhu1", "semhu0", "semhu1";
+		mboxes = <&mbox_m55_hp_mhu0 0>, <&mbox_m55_hp_mhu1 0>, <&mbox_se_mhu0 0>, <&mbox_se_mhu1 0>;
+		mbox-names = "m55_hp_mhu0", "m55_hp_mhu1", "se_mhu0", "se_mhu1";
 	};
 
-	extsys0: extsys@1A010310 {
+	m55_hp: m55_hp@1A010310 {
 		compatible = "arm,extsys_ctrl";
 		reg = <0x1A010310 0x4>,
 		      <0x1A010314 0x4>;
