@@ -39,6 +39,20 @@
 		reg = <0x02000000 0x400000>;
 	};
 
+	regulators {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg_3p3v: regulator@0 {
+			compatible = "regulator-fixed";
+			reg = <0>;
+			regulator-name = "fixed-3.3V";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			regulator-always-on;
+		};
+	};
+
 	gic: interrupt-controller@1c000000 {
 		compatible = "arm,gic-400";
 		#interrupt-cells = <3>;
@@ -513,9 +527,11 @@
 			compatible = "snps,dwcmshc-sdhci";
 			reg = <0x48102000 0x1000>;
 			interrupts = <GIC_SPI 29 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&refclk100mhz>;
-			clocks-names = "core";
+			clocks = <&refclk100mhz>, <&refclk100mhz>;
+			clock-names = "core", "bus";
 			bus-width = <8>;
+			vmmc-supply = <&reg_3p3v>;
+			vqmmc-supply = <&reg_3p3v>;
 		};
 	};
 };
