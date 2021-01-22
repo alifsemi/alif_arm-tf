@@ -29,7 +29,7 @@ override NEED_BL2U	:=	no
 override RESET_TO_SP_MIN	:=	1
 
 #Device tree
-BOLT_REV_A0_HW_CONFIG_DTS   :=      fdts/bolt-rev-a0.dts
+BOLT_REV_A0_HW_CONFIG_DTS   :=      fdts/bolt_rev_a0.dts
 
 BOLT_REV_A0_HW_CONFIG       :=      ${BUILD_PLAT}/fdts/${PLAT}.dtb
 
