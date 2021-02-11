@@ -491,6 +491,184 @@
 			//dmas = <&dma0 5>;
 			//dma-names = "tx";
 		}; /* I2S END */
+
+		/* Hardware Semaphore (HWSEM) */
+		hwsem0: hwsem0@4901b000 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b000 0x4>,
+			      <0x4901b004 0x4>,
+			      <0x4901b008 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 96 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem1: hwsem1@4901b010 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b010 0x4>,
+			      <0x4901b014 0x4>,
+			      <0x4901b018 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 97 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem2: hwsem2@4901b020 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b020 0x4>,
+			      <0x4901b024 0x4>,
+			      <0x4901b028 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 98 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem3: hwsem3@4901b030 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b030 0x4>,
+			      <0x4901b034 0x4>,
+			      <0x4901b038 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 99 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem4: hwsem4@4901b040 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b040 0x4>,
+			      <0x4901b044 0x4>,
+			      <0x4901b048 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 100 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem5: hwsem5@4901b050 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b050 0x4>,
+			      <0x4901b054 0x4>,
+			      <0x4901b058 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 101 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem6: hwsem6@4901b060 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b060 0x4>,
+			      <0x4901b064 0x4>,
+			      <0x4901b068 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 102 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem7: hwsem7@4901b070 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b070 0x4>,
+			      <0x4901b074 0x4>,
+			      <0x4901b078 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 103 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem8: hwsem8@4901b080 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b080 0x4>,
+			      <0x4901b084 0x4>,
+			      <0x4901b088 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 104 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem9: hwsem9@4901b090 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b090 0x4>,
+			      <0x4901b094 0x4>,
+			      <0x4901b098 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 105 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem10: hwsem10@4901b0A0 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b0A0 0x4>,
+			      <0x4901b0A4 0x4>,
+			      <0x4901b0A8 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 106 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem11: hwsem11@4901b0B0 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b0B0 0x4>,
+			      <0x4901b0B4 0x4>,
+			      <0x4901b0B8 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 107 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem12: hwsem12@4901b0C0 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b0C0 0x4>,
+			      <0x4901b0C4 0x4>,
+			      <0x4901b0C8 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 108 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem13: hwsem13@4901b0D0 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b0D0 0x4>,
+			      <0x4901b0D4 0x4>,
+			      <0x4901b0D8 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 109 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem14: hwsem14@4901b0E0 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b0E0 0x4>,
+			      <0x4901b0E4 0x4>,
+			      <0x4901b0E8 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 110 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		};
+		hwsem15: hwsem15@4901b0F0 {
+			compatible = "arm,hwsem";
+			reg = <0x4901b0F0 0x4>,
+			      <0x4901b0F4 0x4>,
+			      <0x4901b0F8 0x4>;
+			reg-names = "hwsem_acq", "hwsem_rel", "hwsem_rst";
+			interrupt-parent = <&gic>;
+			interrupts = <0 111 4>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+		}; /* Hardware Semaphore END */
 	};  /* APB END*/
 
 	ahb@48000000{
