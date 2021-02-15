@@ -491,6 +491,62 @@
 			//dmas = <&dma0 5>;
 			//dma-names = "tx";
 		}; /* I2S END */
+
+		spi0: spi@48103000 {
+			compatible = "snps,dwc-ssi-1.03a";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x48103000 0x1000>;
+			num-cs = <2>;
+			interrupts = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+			reg-io-width = <4>;
+			spi-tx-bus-width = <1>;
+			spi-rx-bus-width = <1>;
+		}; /* SPI0  */
+
+		spi1: spi@48104000 {
+			compatible = "snps,dwc-ssi-1.03a";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x48104000 0x1000>;
+			num-cs = <2>;
+			interrupts = <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+			reg-io-width = <4>;
+			spi-tx-bus-width = <1>;
+			spi-rx-bus-width = <1>;
+		}; /* SPI1  */
+
+		spi2: spi@48105000 {
+			compatible = "snps,dwc-ssi-1.03a";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x48105000 0x1000>;
+			num-cs = <2>;
+			interrupts = <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+			reg-io-width = <4>;
+			spi-tx-bus-width = <1>;
+			spi-rx-bus-width = <1>;
+		}; /* SPI2  */
+
+		spi3: spi@48106000 {
+			compatible = "snps,dwc-ssi-1.03a";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x48106000 0x1000>;
+			num-cs = <2>;
+			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&refclk100mhz>;
+			clock-names = "pclk" ;
+			reg-io-width = <4>;
+			spi-tx-bus-width = <1>;
+			spi-rx-bus-width = <1>;
+		}; /* SPI3  */
 	};  /* APB END*/
 
 	ahb@48000000{
