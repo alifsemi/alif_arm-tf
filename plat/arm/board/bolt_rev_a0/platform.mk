@@ -8,7 +8,7 @@ BOLT_REV_A0_CPU_SOURCES	+=	lib/cpus/aarch32/cortex_a32.S
 
 BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c
 
-PLAT_INCLUDES		:=      -Iplat/arm/board/corstone700/include \
+PLAT_INCLUDES		:=      -Iplat/arm/board/$(PLAT)/include \
 					-Iinclude/plat/arm/common/ \
 					-Iplat/arm/board/corstone700/drivers/mhu/
 

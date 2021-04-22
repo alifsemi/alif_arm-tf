@@ -21,7 +21,7 @@
 					CORSTONE700_MAX_PE_PER_CPU)
 
 /* Bolt REV_A0 Generic Timer Frequency */
-#define BOLT_REV_A0_TIMER_BASE_FREQUENCY      10000000 /* 10Mhz */
+#define BOLT_REV_A0_TIMER_BASE_FREQUENCY      100000000 /* 100Mhz */
 
 #define PLAT_MAX_PWR_LVL		2
 
