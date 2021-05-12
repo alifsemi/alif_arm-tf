@@ -14,7 +14,7 @@ BL32_SOURCES		+=	drivers/cfi/v2m/v2m_flash.c				\
 				plat/arm/board/corstone700/corstone700_stack_protector.c	\
 				plat/arm/board/corstone700/corstone700_pm.c			\
 				plat/arm/board/corstone700/sp_min/corstone700_sp_min_setup.c	\
-				${BOLT_REV_A0_CPU_SOURCES}					\
-				${BOLT_REV_A0_GIC_SOURCES}
+				${DEVKIT_E7_CPU_SOURCES}					\
+				${DEVKIT_E7_GIC_SOURCES}
 
 include plat/arm/common/sp_min/arm_sp_min.mk

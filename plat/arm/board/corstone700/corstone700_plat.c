@@ -29,7 +29,7 @@ void __init plat_arm_pwrc_setup(void)
 	mhu_secure_init();
 }
 
-#ifndef PLAT_ARM_BOLT_REV_A0
+#ifndef PLAT_DEVKIT_E7
 unsigned int plat_get_syscnt_freq2(void)
 {
 	return FPGA_TIMER_BASE_FREQUENCY;
@@ -38,6 +38,6 @@ unsigned int plat_get_syscnt_freq2(void)
 unsigned int plat_get_syscnt_freq2(void)
 {
 	/* Returns 100Mhz as base frequency of system timer */
-	return BOLT_REV_A0_TIMER_BASE_FREQUENCY;
+	return DEVKIT_E7_TIMER_BASE_FREQUENCY;
 }
 #endif

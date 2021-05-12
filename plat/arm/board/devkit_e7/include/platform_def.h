@@ -11,7 +11,7 @@
 #include <plat/arm/board/common/v2m_def.h>
 
 #define PLAT_ARM_CORSTONE700
-#define PLAT_ARM_BOLT_REV_A0
+#define PLAT_DEVKIT_E7
 
 #define CORSTONE700_MAX_CPUS_PER_CLUSTER	4
 #define PLAT_ARM_CLUSTER_COUNT		1
@@ -21,7 +21,7 @@
 					CORSTONE700_MAX_PE_PER_CPU)
 
 /* Bolt REV_A0 Generic Timer Frequency */
-#define BOLT_REV_A0_TIMER_BASE_FREQUENCY      100000000 /* 100Mhz */
+#define DEVKIT_E7_TIMER_BASE_FREQUENCY      100000000 /* 100Mhz */
 
 #define PLAT_MAX_PWR_LVL		2
 
