@@ -6,11 +6,13 @@
 
 DEVKIT_E7_CPU_SOURCES	+=	lib/cpus/aarch32/cortex_a32.S
 
-BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c
+BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c \
+				plat/arm/board/devkit_e7/ospi_flash/norflash_ospi_setup.c
 
 PLAT_INCLUDES		:=      -Iplat/arm/board/$(PLAT)/include \
 					-Iinclude/plat/arm/common/ \
-					-Iplat/arm/board/corstone700/drivers/mhu/
+					-Iplat/arm/board/corstone700/drivers/mhu/ \
+					-Iplat/arm/board/devkit_e7/ospi_flash/
 
 NEED_BL32		:=	yes
 
