@@ -207,9 +207,35 @@ void ospi_xip_enter(ospi_cfg_t *dws)
 	dw_writel(dws, DW_SPI_SER, dws->spi_ser);
 	dw_writel(dws, DW_XIP_CNT_TIME_OUT, 100);				/* Continuous XIP mode deselect timeout in hclk */
 	spi_enable(dws);
-	*dws->aes_base |= 0x00000010; DSB(); 					/* Enable AES mode*/
 }
 
+void cspi_decrypt_enable(ospi_cfg_t *dws, uint8_t *key) __attribute__((optimize("-O0")));
+
+void cspi_decrypt_enable(ospi_cfg_t *dws, uint8_t *key)
+{
+	uint32_t t;
+	if (dws->aes_en)
+	{
+		dws->aes->CSPI_AES_KEY0_REG = (key[12U+3U] & 0xFF) | ((key[12U+2U] & 0xFF) << 8) |
+			((key[12U+1U] & 0xFF) << 16) | ((key[12U] & 0xFF) << 24); /* reg[31:0] */
+		dws->aes->CSPI_AES_KEY1_REG = (key[8U+3U] & 0xFF) | ((key[8U+2U] & 0xFF) << 8) |
+			((key[8U+1U] & 0xFF) << 16) | ((key[8U] & 0xFF) << 24); /* reg[63:32] */
+		dws->aes->CSPI_AES_KEY2_REG = (key[4U+3U] & 0xFF) | ((key[4U+2U] & 0xFF) << 8) |
+			((key[4U+1U] & 0xFF) << 16) | ((key[4U] & 0xFF) << 24); /* reg[95:64] */
+		dws->aes->CSPI_AES_KEY3_REG = (key[3U] & 0xFF) | ((key[2U] & 0xFF) << 8) |
+			((key[1U] & 0xFF) << 16) | ((key[0] & 0xFF) << 24) ; /* reg[127:96] */
+
+		t = (1<<CSPI_CTRL_DECRYPT_ENABLE_OFFSET)
+			| (1<<CSPI_CTRL_XIP_DIRECT_MODE_ENABLE_OFFSET);
+		dws->aes->CSPI_CTRL_REG |= t; DSB();
+	}
+	else
+	{
+		t = (1<<CSPI_CTRL_XIP_DIRECT_MODE_ENABLE_OFFSET);
+		dws->aes->CSPI_CTRL_REG |= t; DSB();
+	}
+	return;
+}
 
 void ospi_init(ospi_cfg_t *dws)
 {
@@ -351,6 +377,7 @@ uint32_t ospi_get_scbytes(ospi_cfg_t *dws)
 }
 
 ospi_cfg_t ospi;
+uint8_t * aes_key;
 
 int init_nor_flash(void)
 {
@@ -359,10 +386,10 @@ int init_nor_flash(void)
 	/* OSPI Configuration settings */
 #ifdef CARRIER
 	dws->regs = OSPI1;
-	dws->aes_base = AES1_BASE;
+	dws->aes = AES1;
 #else
 	dws->regs = OSPI0;
-	dws->aes_base = AES0_BASE;
+	dws->aes = AES0;
 #endif
 	dws->spi_ser = 1;
 	dws->xip_ser = 1;
@@ -371,6 +398,17 @@ int init_nor_flash(void)
 	dws->drv_strength = 1;		/* Drive strength 0 - normal, 4 - higher, 1 - highest speed */
 	dws->ds_en = 1;			/* DS signal Enabled */
 	dws->ddr_en = 0;        	/* DDR is Disabled for now */
+	dws->aes_en = 0;        	/* AES decrypt disable by default */
+#if ENABLE_AES != 0
+	{
+		dws->aes_en = 1;        		/* AES decrypt enable */
+		aes_key = (uint8_t *)  AES_ENC_KEY;	/* AES Key */
+	}
+#else
+	{
+		dws->aes_en = 0;        	/* AES decrypt disable */
+	}
+#endif
 	dws->wait_cycles = 14;		/* Dummy cycles should be between 8 and 22 cycles */
 
 	setup_PinMUX();
@@ -389,6 +427,9 @@ int init_nor_flash(void)
 
 	/* Switch Octal SPI to memory mapped mode */
 	ospi_xip_enter(dws);
+
+	/* Enable AES Decryption on CSPI */
+	cspi_decrypt_enable(dws, aes_key);
 
   return 0;
 }

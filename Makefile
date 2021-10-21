@@ -242,6 +242,10 @@ CPPFLAGS		=	${DEFINES} ${INCLUDES} ${MBEDTLS_INC} -nostdinc		\
 				-Werror=implicit-function-declaration -pipe \
 				-grecord-gcc-switches \
 				-Wl,-z,defs -Wl,-z,now -Wl,-z,relro
+# Define AES_KEY if ENABLE_AES is set to 1.
+ifeq (${ENABLE_AES},1)
+	CPPFLAGS	+=	-DAES_ENC_KEY='"${AES_ENC_KEY}"'
+endif
 ASFLAGS			+=	$(CPPFLAGS) $(ASFLAGS_$(ARCH))			\
 				-D__ASSEMBLY__ -ffreestanding 			\
 				-Wa,--fatal-warnings
@@ -632,6 +636,7 @@ $(eval $(call assert_boolean,USE_TBBR_DEFS))
 $(eval $(call assert_boolean,WARMBOOT_ENABLE_DCACHE_EARLY))
 $(eval $(call assert_boolean,BL2_AT_EL3))
 $(eval $(call assert_boolean,BL2_IN_XIP_MEM))
+$(eval $(call assert_boolean,ENABLE_AES))
 
 $(eval $(call assert_numeric,ARM_ARCH_MAJOR))
 $(eval $(call assert_numeric,ARM_ARCH_MINOR))
@@ -687,6 +692,7 @@ $(eval $(call add_define,USE_TBBR_DEFS))
 $(eval $(call add_define,WARMBOOT_ENABLE_DCACHE_EARLY))
 $(eval $(call add_define,BL2_AT_EL3))
 $(eval $(call add_define,BL2_IN_XIP_MEM))
+$(eval $(call add_define,ENABLE_AES))
 
 # Define the EL3_PAYLOAD_BASE flag only if it is provided.
 ifdef EL3_PAYLOAD_BASE

@@ -53,6 +53,26 @@ typedef struct {
 
 } ssi_regs_t;
 
+typedef struct {
+	volatile uint32_t CSPI_CTRL_REG;	/* 0x0 Control register */
+	volatile uint32_t CSPI_INTR_REG;	/* 0x4 Interrupts */
+	volatile uint32_t CSPI_INTR_MASK_REG;	/* 0x8 Interrupt mask, default to masked */
+	volatile uint32_t CSPI_AES_KEY0_REG;	/* 0xc  AES decryption key [31:0]*/
+	volatile uint32_t CSPI_AES_KEY1_REG;	/* 0x10 AES decryption key [63:32]*/
+	volatile uint32_t CSPI_AES_KEY2_REG;	/* 0x14 AES decryption key [95:64]*/
+	volatile uint32_t CSPI_AES_KEY3_REG;	/* 0x18 AES decryption key [127:96]*/
+	volatile uint32_t CSPI_TIME_OUT_REG;	/* 0x1C Number of clocks to wait if waiting for DWC_SSI AHB, 'd 1000 */
+} cspi_regs_t;
+
+/* Bit fields in CSPI register based on the PPT */
+#define CSPI_CTRL_DECRYPT_ENABLE_OFFSET 	0
+#define CSPI_CTRL_RESET_SPI_CONTROL_LOGIC	1
+#define CSPI_CTRL_XIP_DIRECT_MODE_ENABLE_OFFSET 4
+#define CSPI_CTRL_AES_KEY_LOCK_OFFSET		5
+#define CSPI_CTRL_AES_KEY_HIDE_OFFSET		6
+#define CSPI_INTR_REGS_ERROR_RESP_OFFSET	2
+#define CSPI_INTR_SPI_ERROR_RESP_OFFSET 	3
+
 
 /* Bit fields in CTRLR0 based on DWC_ssi_databook.pdf v1.02a */
 #define DWC_SSI_CTRLR0_SPI_HE_OFFSET		24		/* hyperbus enable */
@@ -215,6 +235,8 @@ typedef struct {
 /** Peripheral OSPI0 base pointer */
 #define OSPI0			((ssi_regs_t *)OSPI0_BASE)
 #define OSPI1			((ssi_regs_t *)OSPI1_BASE)
+#define AES0			((cspi_regs_t *)AES0_BASE)
+#define AES1			((cspi_regs_t *)AES1_BASE)
 #define GPIO_P1			((uint32_t *)GPIO_P1_BASE)
 #define ACLK			400			/* OSPI Clock in MHz */
 
@@ -246,7 +268,7 @@ typedef struct {
 
 typedef struct {
 	ssi_regs_t * regs;		/* Pointer to OSPI0 or OSPI1 base address */
-	volatile uint32_t  *aes_base;	/* Pointer to AES0 or AES1 decryption module & XIP enable line registers */
+	cspi_regs_t * aes;
 	uint32_t	mode;		/* Simple, XIP, Hyperbus - application defined at run time */
 
 	uint32_t	gpio_reset;	/* GPIO to toggle Memory Device reset line - application defined */
@@ -261,6 +283,7 @@ typedef struct {
 	uint32_t	drv_strength;	/* Drive strength */
 	uint32_t	ds_en;		/* DS signal enabled */
 	uint32_t	ddr_en;		/* DDR enable if set to 1, default 0 */
+	uint32_t	aes_en;		/* AES decryption enable if set to 1, default 0 */
 
 	uint32_t	wait_cycles;	/* Wait cycles - Device defined for switching from Rx to Tx */
 	uint32_t	rx_req;		/* Requested data to receive */
