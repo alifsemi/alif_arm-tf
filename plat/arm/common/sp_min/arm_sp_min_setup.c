@@ -66,6 +66,9 @@ void arm_sp_min_early_platform_setup(void *from_bl2, uintptr_t tos_fw_config,
 	/* Initialize the console to provide early debug support */
 	arm_console_boot_init();
 
+        /* Copy DTB into SRAM0 */
+	memcpy((void *)SRAM_PRELOADED_DTB_BASE, (const void *)ARM_PRELOADED_DTB_BASE, PRELOADED_DTB_SIZE);
+
 #if RESET_TO_SP_MIN
 	/* There are no parameters from BL2 if SP_MIN is a reset vector */
 	assert(from_bl2 == NULL);
@@ -94,7 +97,7 @@ void arm_sp_min_early_platform_setup(void *from_bl2, uintptr_t tos_fw_config,
 	 */
 	bl33_image_ep_info.args.arg0 = 0U;
 	bl33_image_ep_info.args.arg1 = ~0U;
-	bl33_image_ep_info.args.arg2 = (u_register_t)ARM_PRELOADED_DTB_BASE;
+	bl33_image_ep_info.args.arg2 = (u_register_t)SRAM_PRELOADED_DTB_BASE;
 # endif
 
 #else /* RESET_TO_SP_MIN */

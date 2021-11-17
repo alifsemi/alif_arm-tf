@@ -20,6 +20,12 @@
 					CORSTONE700_MAX_CPUS_PER_CLUSTER *   \
 					CORSTONE700_MAX_PE_PER_CPU)
 
+/* DTB needs to be within SRAM0 region i.e within 4 MB region */
+#define SRAM_PRELOADED_DTB_BASE 0x02390000
+
+#define KILOBYTES 1024
+#define PRELOADED_DTB_SIZE (30*KILOBYTES)
+
 /* Bolt REV_A0 Generic Timer Frequency */
 #define DEVKIT_E7_TIMER_BASE_FREQUENCY      100000000 /* 100Mhz */
 
