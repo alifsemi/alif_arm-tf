@@ -57,6 +57,13 @@
 #ifndef ARM_TRUSTED_SRAM_BASE
 #define ARM_TRUSTED_SRAM_BASE		UL(0x02000000)
 #endif /* !ARM_TRUSTED_SRAM_BASE */
+#if BL32_IN_XIP_MEM
+#ifndef BL32_XIP_BASE
+#error
+#define BL32_XIP_BASE                   UL(0x80002000)
+#endif /* !BL32_XIP_BASE */
+#define BL32_ROM_SIZE                   UL(0x00008000) /* 32 KB */
+#endif /* BL32_IN_XIP_MEM */
 #else
 #define ARM_TRUSTED_SRAM_BASE		UL(0x04000000)
 #endif
@@ -471,6 +478,8 @@
  */
 #  define BL32_BASE			ARM_FW_CONFIG_LIMIT
 #  define BL32_LIMIT			(ARM_BL_RAM_BASE + ARM_BL_RAM_SIZE)
+#  define BL32_ROM_BASE			(BL32_XIP_BASE)
+#  define BL32_ROM_LIMIT                 (BL32_ROM_BASE + BL32_ROM_SIZE)
 # else
 /* Put BL32 below BL2 in the Trusted SRAM.*/
 #  define BL32_BASE			((ARM_BL_RAM_BASE + ARM_BL_RAM_SIZE)\

@@ -122,6 +122,13 @@ func sp_min_entrypoint
 	route_fiq_to_sp_min r4
 #endif
 
+#if BL32_IN_XIP_MEM
+	ldr	r0, =__DATA_START__
+	ldr	r1, =__DATA_ROM_START__
+	ldr	r2, =__DATA_SIZE__
+	bl	memcpy4
+#endif
+
 	mov	r0, r9
 	mov	r1, r10
 	mov	r2, r11

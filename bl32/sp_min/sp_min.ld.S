@@ -13,7 +13,12 @@ OUTPUT_ARCH(arm)
 ENTRY(sp_min_vector_table)
 
 MEMORY {
+#if BL32_IN_XIP_MEM
+    ROM (rx): ORIGIN = BL32_ROM_BASE, LENGTH = BL32_ROM_LIMIT - BL32_ROM_BASE
     RAM (rwx): ORIGIN = BL32_BASE, LENGTH = BL32_LIMIT - BL32_BASE
+#else
+    RAM (rwx): ORIGIN = BL32_BASE, LENGTH = BL32_LIMIT - BL32_BASE
+#endif
 }
 
 #ifdef PLAT_SP_MIN_EXTRA_LD_SCRIPT
@@ -22,9 +27,15 @@ MEMORY {
 
 SECTIONS
 {
+#if BL32_IN_XIP_MEM
+    . = BL32_ROM_BASE;
+   ASSERT(. == ALIGN(PAGE_SIZE),
+          "BL32_ROM_BASE address is not aligned on a page boundary.")
+#else
     . = BL32_BASE;
    ASSERT(. == ALIGN(PAGE_SIZE),
           "BL32_BASE address is not aligned on a page boundary.")
+#endif
 
 #if SEPARATE_CODE_AND_RODATA
     .text . : {
@@ -34,16 +45,28 @@ SECTIONS
         *(.vectors)
         . = ALIGN(PAGE_SIZE);
         __TEXT_END__ = .;
+#if BL32_IN_XIP_MEM
+    } >ROM
+#else
     } >RAM
+#endif
 
      /* .ARM.extab and .ARM.exidx are only added because Clang need them */
      .ARM.extab . : {
         *(.ARM.extab* .gnu.linkonce.armextab.*)
+#if BL32_IN_XIP_MEM
+     } >ROM
+#else
      } >RAM
+#endif
 
      .ARM.exidx . : {
         *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+#if BL32_IN_XIP_MEM
+     } >ROM
+#else
      } >RAM
+#endif
 
     .rodata . : {
         __RODATA_START__ = .;
@@ -70,7 +93,11 @@ SECTIONS
 
         . = ALIGN(PAGE_SIZE);
         __RODATA_END__ = .;
+#if BL32_IN_XIP_MEM
+    } >ROM
+#else
     } >RAM
+#endif
 #else
     ro . : {
         __RO_START__ = .;
@@ -107,7 +134,11 @@ SECTIONS
          */
         . = ALIGN(PAGE_SIZE);
         __RO_END__ = .;
+#if BL32_IN_XIP_MEM
+    } >ROM
+#else
     } >RAM
+#endif
 #endif
 
     ASSERT(__CPU_OPS_END__ > __CPU_OPS_START__,
@@ -116,13 +147,22 @@ SECTIONS
      * Define a linker symbol to mark start of the RW memory area for this
      * image.
      */
+#if BL32_IN_XIP_MEM
+    . = BL32_BASE;
+    ASSERT(BL32_BASE == ALIGN(PAGE_SIZE),
+           "BL32_BASE address is not aligned on a page boundary.")
+#endif
     __RW_START__ = . ;
 
     .data . : {
         __DATA_START__ = .;
         *(.data*)
         __DATA_END__ = .;
+#if BL32_IN_XIP_MEM
+    } >RAM AT>ROM
+#else
     } >RAM
+#endif
 
 #ifdef BL32_PROGBITS_LIMIT
     ASSERT(. <= BL32_PROGBITS_LIMIT, "BL32 progbits has exceeded its limit.")
@@ -237,4 +277,25 @@ SECTIONS
     __RW_END__ = .;
 
    __BL32_END__ = .;
+
+#if BL32_IN_XIP_MEM
+    __BL32_RAM_START__ = ADDR(.data);
+    __BL32_RAM_END__ = .;
+
+    __DATA_ROM_START__ = LOADADDR(.data);
+    __DATA_SIZE__ = SIZEOF(.data) + SIZEOF(.dynamic) + SIZEOF(.got) + SIZEOF(.got.plt);
+
+    __BL32_ROM_END__ =  __DATA_ROM_START__ + __DATA_SIZE__;
+    ASSERT(__BL32_ROM_END__ <= BL32_ROM_LIMIT,
+           "BL32's RO content has exceeded its limit.")
+#endif
+    __BSS_SIZE__ = SIZEOF(.bss);
+
+
+#if USE_COHERENT_MEM
+    __COHERENT_RAM_UNALIGNED_SIZE__ =
+        __COHERENT_RAM_END_UNALIGNED__ - __COHERENT_RAM_START__;
+#endif
+
+    ASSERT(. <= BL32_LIMIT, "BL32's RW content has exceeded its limit.")
 }

@@ -693,6 +693,8 @@ $(eval $(call add_define,WARMBOOT_ENABLE_DCACHE_EARLY))
 $(eval $(call add_define,BL2_AT_EL3))
 $(eval $(call add_define,BL2_IN_XIP_MEM))
 $(eval $(call add_define,ENABLE_AES))
+$(eval $(call add_define,BL32_XIP_BASE))
+$(eval $(call add_define,BL32_IN_XIP_MEM))
 
 # Define the EL3_PAYLOAD_BASE flag only if it is provided.
 ifdef EL3_PAYLOAD_BASE
