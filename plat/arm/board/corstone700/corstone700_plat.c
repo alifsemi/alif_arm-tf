@@ -19,6 +19,7 @@
 const mmap_region_t plat_arm_mmap[] = {
 	ARM_MAP_SHARED_RAM,
 	ARM_MAP_NS_DRAM1,
+	UART_MAP_DEVICE,
 	CORSTONE700_MAP_DEVICE,
 	{0}
 };

@@ -9,7 +9,7 @@
 #include <platform_def.h>
 
 #include <common/debug.h>
-#include <drivers/arm/pl011.h>
+#include <drivers/ti/uart/uart_16550.h>
 #include <drivers/console.h>
 #include <plat/arm/common/plat_arm.h>
 
@@ -17,17 +17,17 @@
  * Functions that set up the console
  ******************************************************************************/
 #if MULTI_CONSOLE_API
-static console_pl011_t arm_boot_console;
-static console_pl011_t arm_runtime_console;
+static console_16550_t arm_boot_console;
+static console_16550_t arm_runtime_console;
 #endif
 
 /* Initialize the console to provide early debug support */
 void __init arm_console_boot_init(void)
 {
 #if MULTI_CONSOLE_API
-	int rc = console_pl011_register(PLAT_ARM_BOOT_UART_BASE,
-					PLAT_ARM_BOOT_UART_CLK_IN_HZ,
-					ARM_CONSOLE_BAUDRATE,
+	int rc = console_16550_register(UART_BASE_ADDR,
+					UART_CLOCK_FREQ,
+					UART_BAUDRATE,
 					&arm_boot_console);
 	if (rc == 0) {
 		/*
@@ -61,9 +61,9 @@ void arm_console_boot_end(void)
 void arm_console_runtime_init(void)
 {
 #if MULTI_CONSOLE_API
-	int rc = console_pl011_register(PLAT_ARM_RUN_UART_BASE,
-					PLAT_ARM_RUN_UART_CLK_IN_HZ,
-					ARM_CONSOLE_BAUDRATE,
+	int rc = console_16550_register(UART_BASE_ADDR,
+					UART_CLOCK_FREQ,
+					UART_BAUDRATE,
 					&arm_runtime_console);
 	if (rc == 0)
 		panic();

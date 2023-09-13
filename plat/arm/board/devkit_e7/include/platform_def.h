@@ -65,7 +65,9 @@
 #define PSYSR_PP		BIT_32(26)
 
 # define PLAT_ARM_MMAP_ENTRIES          8
-# define MAX_XLAT_TABLES                5
+/* Set MAX_XLAT_TABLES to 7 in order to solve assertion failure at
+ * ASSERT: lib/xlat_tables_v2/xlat_tables_core.c:97 */
+# define MAX_XLAT_TABLES                7
 
 #define PLAT_ARM_TRUSTED_SRAM_SIZE	UL(0x00040000)  /* 256 KB */
 
@@ -87,6 +89,15 @@
 						CORSTONE700_DEVICE_SIZE,      \
 						MT_DEVICE | MT_RW | MT_SECURE)
 
+#define UART_BASE_ADDR			(0x4901C000)
+#define UART_SIZE			(0x1000)
+#define UART_CLOCK_FREQ			100000000
+#define UART_BAUDRATE			115200
+
+#define UART_MAP_DEVICE			MAP_REGION_FLAT(		\
+						UART_BASE_ADDR, 	\
+						UART_SIZE,              \
+						MT_DEVICE | MT_RW | MT_SECURE)
 /* GIC related constants */
 #define PLAT_ARM_GICD_BASE              0x1C010000
 #define PLAT_ARM_GICC_BASE              0x1C02F000

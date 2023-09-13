@@ -29,6 +29,17 @@ static entry_point_info_t bl33_image_ep_info;
 					BL32_END - BL32_BASE,		\
 					MT_MEMORY | MT_RW | MT_SECURE)
 
+/* EXPMST0 Control Register */
+#define EXPMST0_CTRL_REG       (0x4902F000)
+/* UART Control Register */
+#define UART_CTRL_REG          (0x4902F008)
+/* PINMUX address for UART4_C RX and TX */
+#define PINMUX_UART4_RX_B_ADDR (0x1A603184)
+#define PINMUX_UART4_TX_B_ADDR (0x1A603188)
+/* UART4_C RX and TX selection values*/
+#define PINMUX_UART4_RX_B_VAL  (0x00230002)
+#define PINMUX_UART4_TX_B_VAL  (0x00230002)
+
 /*
  * Check that BL32_BASE is above ARM_TB_FW_CONFIG_LIMIT. The reserved page
  * is required for SOC_FW_CONFIG/TOS_FW_CONFIG passed from BL2.
@@ -63,6 +74,23 @@ entry_point_info_t *sp_min_plat_get_bl33_ep_info(void)
 void arm_sp_min_early_platform_setup(void *from_bl2, uintptr_t tos_fw_config,
 			uintptr_t hw_config, void *plat_params_from_bl2)
 {
+
+	uint32_t value;
+
+	/* Enable peripheral and APB clocks */
+	value = mmio_read_32(EXPMST0_CTRL_REG);
+	mmio_write_32(EXPMST0_CTRL_REG, (value | 0xC0000000));
+
+	/* Enable UART clock and select UART clock source */
+	value = mmio_read_32(UART_CTRL_REG);
+	mmio_write_32(UART_CTRL_REG, (value | 0x0000FFFF));
+
+	/* Initialize pinmux, and pad config for UART4_B */
+	value = mmio_read_32(PINMUX_UART4_RX_B_ADDR);
+	mmio_write_32(PINMUX_UART4_RX_B_ADDR, (value | PINMUX_UART4_RX_B_VAL));
+	value = mmio_read_32(PINMUX_UART4_TX_B_ADDR);
+	mmio_write_32(PINMUX_UART4_TX_B_ADDR, (value | PINMUX_UART4_TX_B_VAL));
+
 	/* Initialize the console to provide early debug support */
 	arm_console_boot_init();
 

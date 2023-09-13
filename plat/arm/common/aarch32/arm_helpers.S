@@ -45,10 +45,10 @@ endfunc plat_arm_calc_core_pos
 	 * ---------------------------------------------
 	 */
 func plat_crash_console_init
-	ldr	r0, =PLAT_ARM_CRASH_UART_BASE
-	ldr	r1, =PLAT_ARM_CRASH_UART_CLK_IN_HZ
-	ldr	r2, =ARM_CONSOLE_BAUDRATE
-	b	console_pl011_core_init
+	ldr	r0, =UART_BASE_ADDR
+	ldr	r1, =UART_CLOCK_FREQ
+	ldr	r2, =UART_BAUDRATE
+	b	console_16550_core_init
 endfunc plat_crash_console_init
 
 	/* ---------------------------------------------
@@ -59,8 +59,8 @@ endfunc plat_crash_console_init
 	 * ---------------------------------------------
 	 */
 func plat_crash_console_putc
-	ldr	r1, =PLAT_ARM_CRASH_UART_BASE
-	b	console_pl011_core_putc
+	ldr	r1, =UART_BASE_ADDR
+	b	console_16550_core_putc
 endfunc plat_crash_console_putc
 
 	/* ---------------------------------------------
@@ -72,6 +72,6 @@ endfunc plat_crash_console_putc
 	 * ---------------------------------------------
 	 */
 func plat_crash_console_flush
-	ldr	r0, =PLAT_ARM_CRASH_UART_BASE
-	b	console_pl011_core_flush
+	ldr	r0, =UART_BASE_ADDR
+	b	console_16550_core_flush
 endfunc plat_crash_console_flush
