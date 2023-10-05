@@ -128,6 +128,12 @@ func sp_min_entrypoint
 	ldr	r2, =__DATA_SIZE__
 	bl	memcpy4
 #endif
+	/* Disable streaming by setting bits 28, 27, 26, and 25 to 1.
+	All write-allocate lines allocate in the L1 or L2 cache. */
+	mrrc	p15, 0, r0, r1, c15
+	orr	r0, r0, #0x1E000000
+	mcrr	p15, 0, r0, r1, c15
+	dsb
 
 	mov	r0, r9
 	mov	r1, r10
