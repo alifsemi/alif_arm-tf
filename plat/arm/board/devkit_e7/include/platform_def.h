@@ -89,7 +89,30 @@
 						CORSTONE700_DEVICE_SIZE,      \
 						MT_DEVICE | MT_RW | MT_SECURE)
 
+/* EXPMST0 Control Register */
+#define EXPMST0_CTRL_REG		(0x4902F000)
+/* UART Control Register */
+#define UART_CTRL_REG			(0x4902F008)
+#if UART == 4
+/* PINMUX address for UART4_B RX and TX */
+#define PINMUX_UART_RX_ADDR		(0x1A603184)
+#define PINMUX_UART_TX_ADDR		(0x1A603188)
+/* UART4_C RX and TX selection values*/
+#define PINMUX_UART_RX_VAL		(0x00230002)
+#define PINMUX_UART_TX_VAL		(0x00230002)
 #define UART_BASE_ADDR			(0x4901C000)
+#elif UART == 2
+/* PINMUX address for UART4_B RX and TX */
+#define PINMUX_UART_RX_ADDR		(0x1A603020)
+#define PINMUX_UART_TX_ADDR		(0x1A603024)
+/* UART4_C RX and TX selection values*/
+#define PINMUX_UART_RX_VAL		(0x00230001)
+#define PINMUX_UART_TX_VAL		(0x00230001)
+#define UART_BASE_ADDR			(0x4901A000)
+#else
+#error "Set UART with an appropriate value. Example: Either 2 or 4."
+#endif
+
 #define UART_SIZE			(0x1000)
 #define UART_CLOCK_FREQ			100000000
 #define UART_BAUDRATE			115200

@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
+$(eval $(call add_define,UART))
+
 DEVKIT_E7_CPU_SOURCES	+=	lib/cpus/aarch32/cortex_a32.S
 
 BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c \
@@ -12,6 +14,7 @@ BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c \
 				plat/arm/board/$(PLAT)/drivers/ospi/ospi_hyperram_xip.c \
 				plat/arm/board/$(PLAT)/drivers/ospi/ospi_hram_reg_access.c \
 				plat/arm/board/$(PLAT)/ospi_hyperram/ospi_hyperram_xip_setup.c \
+				plat/arm/board/$(PLAT)/devkit_e7_setup.c \
 				drivers/ti/uart/aarch32/16550_console.S
 
 PLAT_INCLUDES		:=      -Iplat/arm/board/$(PLAT)/include \
@@ -23,7 +26,7 @@ PLAT_INCLUDES		:=      -Iplat/arm/board/$(PLAT)/include \
 
 NEED_BL32		:=	yes
 
-DEVKIT_E7_GIC_SOURCES :=	drivers/arm/gic/common/gic_common.c     \
+DEVKIT_E7_GIC_SOURCES	:=	drivers/arm/gic/common/gic_common.c     \
 				drivers/arm/gic/v2/gicv2_main.c         \
 				drivers/arm/gic/v2/gicv2_helpers.c      \
 				plat/common/plat_gicv2.c                \
