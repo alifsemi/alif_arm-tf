@@ -7,6 +7,7 @@
 DEVKIT_E7_CPU_SOURCES	+=	lib/cpus/aarch32/cortex_a32.S
 
 BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c \
+				plat/arm/board/$(PLAT)/drivers/ospi/ospi_drv.c \
 				plat/arm/board/$(PLAT)/ospi_flash/norflash_ospi_setup.c \
 				plat/arm/board/$(PLAT)/drivers/ospi/ospi.c \
 				plat/arm/board/$(PLAT)/drivers/ospi/ospi_hyperram_xip.c \
