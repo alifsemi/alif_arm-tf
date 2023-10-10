@@ -65,9 +65,9 @@
 #define PSYSR_PP		BIT_32(26)
 
 # define PLAT_ARM_MMAP_ENTRIES          8
-/* Set MAX_XLAT_TABLES to 7 in order to solve assertion failure at
+/* Set MAX_XLAT_TABLES to 8 in order to solve assertion failure at
  * ASSERT: lib/xlat_tables_v2/xlat_tables_core.c:97 */
-# define MAX_XLAT_TABLES                7
+# define MAX_XLAT_TABLES                8
 
 #define PLAT_ARM_TRUSTED_SRAM_SIZE	UL(0x00040000)  /* 256 KB */
 
