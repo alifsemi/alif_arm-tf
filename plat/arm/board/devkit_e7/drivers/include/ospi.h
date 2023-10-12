@@ -636,6 +636,7 @@ void ospi_control_ss(OSPI_Type *ospi, uint8_t slave, SPI_SS_STATE state);
 */
 void ospi_control_xip_ss(OSPI_Type *ospi, uint8_t slave, SPI_SS_STATE state);
 
+#ifdef __TRANSER_STRUCT__
 /**
   \fn          void ospi_send(OSPI_Type *spi, ospi_transfer_t *transfer)
   \brief       Prepare the OSPI instance for transmission
@@ -644,6 +645,7 @@ void ospi_control_xip_ss(OSPI_Type *ospi, uint8_t slave, SPI_SS_STATE state);
   \return      none
 */
 void ospi_send(OSPI_Type *ospi, ospi_transfer_t *transfer);
+#endif
 
 /**
   \fn          void ospi_receive(OSPI_Type *ospi, ospi_transfer_t *transfer)
