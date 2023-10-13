@@ -5,6 +5,8 @@
 #
 
 $(eval $(call add_define,UART))
+$(eval $(call add_define,CFG_HYPRAM))
+$(eval $(call add_define,CFG_FLASH))
 
 DEVKIT_E7_CPU_SOURCES	+=	lib/cpus/aarch32/cortex_a32.S
 

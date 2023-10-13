@@ -637,7 +637,6 @@ $(eval $(call assert_boolean,WARMBOOT_ENABLE_DCACHE_EARLY))
 $(eval $(call assert_boolean,BL2_AT_EL3))
 $(eval $(call assert_boolean,BL2_IN_XIP_MEM))
 $(eval $(call assert_boolean,ENABLE_AES))
-$(eval $(call assert_boolean,B0))
 
 $(eval $(call assert_numeric,ARM_ARCH_MAJOR))
 $(eval $(call assert_numeric,ARM_ARCH_MINOR))
