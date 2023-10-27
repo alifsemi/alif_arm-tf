@@ -16,6 +16,11 @@
 #include <ospi_hyperram_xip.h>
 #include <ospi_drv.h>
 #include <ospi_hram_reg_access.h>
+#include <mhu.h>
+
+/* MHUv2 Secure Channel receiver and sender */
+#define PLAT_SDK700_MHU0_SEND		0x1B800000
+#define PLAT_SDK700_MHU0_RECV		0x1B810000
 
 #define OSPI_RESET_PIN			6
 #define DDR_DRIVE_EDGE      		1

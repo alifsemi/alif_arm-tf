@@ -4,10 +4,20 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-$(eval $(call add_define,UART))
-$(eval $(call add_define,HYPRAM_EN))
+$(eval $(call add_define,AES_EN))
 $(eval $(call add_define,FLASH_EN))
+$(eval $(call add_define,HYPRAM_EN))
+$(eval $(call add_define,UART))
 
+ifeq "1" "${AES_EN}"
+ifneq "1" "${FLASH_EN}"
+$(error AES_EN is set to 1 but not FLASH_EN. Set FLASH_EN to 1)
+endif
+ifeq "" "${AES_ENC_KEY}"
+$(error AES_EN is set to 1 but AES_ENC_KEY is empty.Set AES key in AES_ENC_KEY)
+endif
+endif
+CPPFLAGS 		+= -DAES_ENC_KEY=\"${AES_ENC_KEY}\"
 DEVKIT_E7_CPU_SOURCES	+=	lib/cpus/aarch32/cortex_a32.S
 
 BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c \
@@ -18,6 +28,7 @@ BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c \
 				plat/arm/board/$(PLAT)/drivers/ospi/ospi_hram_reg_access.c \
 				plat/arm/board/$(PLAT)/ospi_hyperram/ospi_hyperram_xip_setup.c \
 				plat/arm/board/$(PLAT)/devkit_e7_setup.c \
+				plat/arm/board/$(PLAT)/se_service/services.c \
 				drivers/ti/uart/aarch32/16550_console.S
 
 PLAT_INCLUDES		:=      -Iplat/arm/board/$(PLAT)/include \

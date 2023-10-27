@@ -10,6 +10,7 @@
 
 #include <platform_def.h>
 #include <lib/mmio.h>
+#include <common/debug.h>
 
 void configure_devkit_uart_pinmux_padconf()
 {

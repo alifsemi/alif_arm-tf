@@ -242,10 +242,6 @@ CPPFLAGS		=	${DEFINES} ${INCLUDES} ${MBEDTLS_INC} -nostdinc		\
 				-Werror=implicit-function-declaration -pipe \
 				-grecord-gcc-switches \
 				-Wl,-z,defs -Wl,-z,now -Wl,-z,relro
-# Define AES_KEY if ENABLE_AES is set to 1.
-ifeq (${ENABLE_AES},1)
-	CPPFLAGS	+=	-DAES_ENC_KEY='"${AES_ENC_KEY}"'
-endif
 ASFLAGS			+=	$(CPPFLAGS) $(ASFLAGS_$(ARCH))			\
 				-D__ASSEMBLY__ -ffreestanding 			\
 				-Wa,--fatal-warnings
@@ -692,8 +688,6 @@ $(eval $(call add_define,USE_TBBR_DEFS))
 $(eval $(call add_define,WARMBOOT_ENABLE_DCACHE_EARLY))
 $(eval $(call add_define,BL2_AT_EL3))
 $(eval $(call add_define,BL2_IN_XIP_MEM))
-$(eval $(call add_define,ENABLE_AES))
-$(eval $(call add_define,B0))
 $(eval $(call add_define,BL32_XIP_BASE))
 $(eval $(call add_define,BL32_IN_XIP_MEM))
 

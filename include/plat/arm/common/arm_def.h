@@ -59,7 +59,6 @@
 #endif /* !ARM_TRUSTED_SRAM_BASE */
 #if BL32_IN_XIP_MEM
 #ifndef BL32_XIP_BASE
-#error
 #define BL32_XIP_BASE                   UL(0x80002000)
 #endif /* !BL32_XIP_BASE */
 #define BL32_ROM_SIZE                   UL(0x00008000) /* 32 KB */
