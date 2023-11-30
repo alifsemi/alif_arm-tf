@@ -30,6 +30,7 @@
 
 /* Pointers to per-core cpu contexts */
 static void *sp_min_cpu_ctx_ptr[PLATFORM_CORE_COUNT];
+extern int init_nor_flash(void);
 
 /* SP_MIN only stores the non secure smc context */
 static smc_ctx_t sp_min_smc_context[PLATFORM_CORE_COUNT];
@@ -189,6 +190,13 @@ void sp_min_main(void)
 	 */
 	sp_min_plat_runtime_setup();
 
+#if FLASH_EN
+	if (init_nor_flash()) {
+		ERROR("%s: OSPI1 NOR flash initialization failed\n",
+			__func__);
+		panic();
+	}
+#endif
 	console_flush();
 }
 

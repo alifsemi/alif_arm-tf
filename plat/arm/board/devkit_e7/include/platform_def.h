@@ -26,8 +26,8 @@
 #define KILOBYTES 1024
 #define PRELOADED_DTB_SIZE (48*KILOBYTES)
 
-/* Bolt REV_A0 Generic Timer Frequency */
-#define DEVKIT_E7_TIMER_BASE_FREQUENCY      100000000 /* 100Mhz */
+/* DevKit Generic Timer Frequency */
+#define DEVKIT_E7_TIMER_BASE_FREQUENCY  100000000 /* 100Mhz */
 
 #define PLAT_MAX_PWR_LVL		2
 
@@ -64,10 +64,10 @@
 #define PSYSR_PC		BIT_32(27)
 #define PSYSR_PP		BIT_32(26)
 
-# define PLAT_ARM_MMAP_ENTRIES          8
-/* Set MAX_XLAT_TABLES to 8 in order to solve assertion failure at
+# define PLAT_ARM_MMAP_ENTRIES          12
+/* Set MAX_XLAT_TABLES to 12 in order to solve assertion failure at
  * ASSERT: lib/xlat_tables_v2/xlat_tables_core.c:97 */
-# define MAX_XLAT_TABLES                8
+# define MAX_XLAT_TABLES                12
 
 #define PLAT_ARM_TRUSTED_SRAM_SIZE	UL(0x00040000)  /* 256 KB */
 
@@ -97,15 +97,15 @@
 /* PINMUX address for UART4_B RX and TX */
 #define PINMUX_UART_RX_ADDR		(0x1A603184)
 #define PINMUX_UART_TX_ADDR		(0x1A603188)
-/* UART4_C RX and TX selection values*/
+/* UART4_B RX and TX selection values */
 #define PINMUX_UART_RX_VAL		(0x00230002)
 #define PINMUX_UART_TX_VAL		(0x00230002)
 #define UART_BASE_ADDR			(0x4901C000)
 #elif UART == 2
-/* PINMUX address for UART4_B RX and TX */
+/* PINMUX address for UART2_A RX and TX */
 #define PINMUX_UART_RX_ADDR		(0x1A603020)
 #define PINMUX_UART_TX_ADDR		(0x1A603024)
-/* UART4_C RX and TX selection values*/
+/* UART2_A RX and TX selection values */
 #define PINMUX_UART_RX_VAL		(0x00230001)
 #define PINMUX_UART_TX_VAL		(0x00230001)
 #define UART_BASE_ADDR			(0x4901A000)
@@ -136,6 +136,41 @@
 						AES0_SIZE,              \
 						MT_DEVICE | MT_RW | MT_SECURE)
 
+#define OSPI1_BASE_ADDR			(0x83002000)
+#define OSPI1_SIZE			(0x1000)
+#define OSPI1_MAP_DEVICE		MAP_REGION_FLAT(		\
+						OSPI1_BASE_ADDR,	\
+						OSPI1_SIZE,		\
+						MT_DEVICE | MT_RW | MT_SECURE)
+
+#define AES1_BASE_ADDR			(0x83003000)
+#define AES1_SIZE			(0x1000)
+#define AES1_MAP_DEVICE			MAP_REGION_FLAT(		\
+						AES1_BASE_ADDR,		\
+						AES1_SIZE,		\
+						MT_DEVICE | MT_RW | MT_SECURE)
+
+#define SE_MHU0_SEND_ADDR               (0x1B800000)
+#define MHU0_SIZE                       (0x1000)
+#define SE_MHU0_SEND_DEVICE             MAP_REGION_FLAT(		\
+						SE_MHU0_SEND_ADDR,	\
+						MHU0_SIZE,		\
+						MT_DEVICE | MT_RW | MT_SECURE)
+
+#define SE_MHU0_RECV_ADDR               (0x1B810000)
+#define SE_MHU0_RECV_DEVICE             MAP_REGION_FLAT(		\
+						SE_MHU0_RECV_ADDR,	\
+						MHU0_SIZE,              \
+						MT_DEVICE | MT_RW | MT_SECURE)
+
+/* SRAM0 memory 0x02380000 - 0x02380FFF is used for MHU0 */
+/* communication with SE.*/
+#define MHU0_PAYLOAD_ADDR                       0x02380000
+#define MHU0_PAYLOAD_MAP                MAP_REGION_FLAT(		\
+						MHU0_PAYLOAD_ADDR,	\
+						0x1000,			\
+						MT_DEVICE | MT_RW | MT_SECURE)
+
 /* GIC related constants */
 #define PLAT_ARM_GICD_BASE              0x1C010000
 #define PLAT_ARM_GICC_BASE              0x1C02F000
@@ -144,6 +179,7 @@
 /* MHUv2 Secure Channel receiver and sender */
 #define PLAT_SDK700_MHU0_SEND            0x1B800000
 #define PLAT_SDK700_MHU0_RECV            0x1B810000
+#define CH_ID                            0
 
 #define CORSTONE700_IRQ_TZ_WDOG		64
 #define CORSTONE700_IRQ_SEC_SYS_TIMER	65

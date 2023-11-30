@@ -27,7 +27,7 @@ BL32_SOURCES		+=      plat/arm/board/corstone700/drivers/mhu/mhu.c \
 				plat/arm/board/$(PLAT)/drivers/ospi/ospi_hyperram_xip.c \
 				plat/arm/board/$(PLAT)/drivers/ospi/ospi_hram_reg_access.c \
 				plat/arm/board/$(PLAT)/ospi_hyperram/ospi_hyperram_xip_setup.c \
-				plat/arm/board/$(PLAT)/devkit_e7_setup.c \
+				plat/arm/board/$(PLAT)/devkit_e7_plat.c \
 				plat/arm/board/$(PLAT)/se_service/services.c \
 				drivers/ti/uart/aarch32/16550_console.S
 
