@@ -71,9 +71,6 @@ void arm_sp_min_early_platform_setup(void *from_bl2, uintptr_t tos_fw_config,
 	/* Initialize the console to provide early debug support */
 	arm_console_boot_init();
 
-        /* Copy DTB into SRAM0 */
-	memcpy((void *)SRAM_PRELOADED_DTB_BASE, (const void *)ARM_PRELOADED_DTB_BASE, PRELOADED_DTB_SIZE);
-
 #if RESET_TO_SP_MIN
 	/* There are no parameters from BL2 if SP_MIN is a reset vector */
 	assert(from_bl2 == NULL);
@@ -102,7 +99,7 @@ void arm_sp_min_early_platform_setup(void *from_bl2, uintptr_t tos_fw_config,
 	 */
 	bl33_image_ep_info.args.arg0 = 0U;
 	bl33_image_ep_info.args.arg1 = ~0U;
-	bl33_image_ep_info.args.arg2 = (u_register_t)SRAM_PRELOADED_DTB_BASE;
+	bl33_image_ep_info.args.arg2 = (u_register_t)RAM_PRELOADED_DTB_BASE;
 # endif
 
 #else /* RESET_TO_SP_MIN */
@@ -230,10 +227,19 @@ void sp_min_plat_arch_setup(void)
 #if USE_COHERENT_MEM
 		ARM_MAP_BL_COHERENT_RAM,
 #endif
+		MAP_SRAM0,
+#if HYPRAM_EN
+		MAP_HYPERRAM,
+#endif
 		{0}
 	};
 
 	setup_page_tables(bl_regions, plat_arm_get_mmap());
 
 	enable_mmu_svc_mon(0);
+
+        /* Copy DTB into RAM */
+	memcpy((void *)RAM_PRELOADED_DTB_BASE, (const void *)ARM_PRELOADED_DTB_BASE, PRELOADED_DTB_SIZE);
+
+	flush_dcache_range(RAM_PRELOADED_DTB_BASE, PRELOADED_DTB_SIZE);
 }

@@ -101,7 +101,11 @@ ifeq (${ARM_LINUX_KERNEL_AS_BL33},1)
   ifndef ARM_PRELOADED_DTB_BASE
     $(error "ARM_PRELOADED_DTB_BASE must be set if ARM_LINUX_KERNEL_AS_BL33 is used.")
   endif
+  ifndef RAM_PRELOADED_DTB_BASE
+    $(error "RAM_PRELOADED_DTB_BASE must be set if ARM_LINUX_KERNEL_AS_BL33 is used.")
+  endif
   $(eval $(call add_define,ARM_PRELOADED_DTB_BASE))
+  $(eval $(call add_define,RAM_PRELOADED_DTB_BASE))
 endif
 
 # Use an implementation of SHA-256 with a smaller memory footprint but reduced

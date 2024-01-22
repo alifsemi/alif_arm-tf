@@ -20,9 +20,6 @@
 					CORSTONE700_MAX_CPUS_PER_CLUSTER *   \
 					CORSTONE700_MAX_PE_PER_CPU)
 
-/* DTB needs to be within SRAM0 region i.e within 4 MB region */
-#define SRAM_PRELOADED_DTB_BASE 0x02390000
-
 #define KILOBYTES 1024
 #define PRELOADED_DTB_SIZE (48*KILOBYTES)
 
@@ -113,6 +110,14 @@
 #error "Set UART with an appropriate value. Example: Either 2 or 4."
 #endif
 
+/* Map 4MB */
+#define SRAM0_BASE_ADDR			(0x02000000)
+#define SRAM0_SIZE			(0x400000)
+#define MAP_SRAM0			MAP_REGION_FLAT(		\
+					SRAM0_BASE_ADDR,		\
+					SRAM0_SIZE,			\
+					MT_MEMORY | MT_RW | MT_SECURE)
+
 #define UART_SIZE			(0x1000)
 #define UART_CLOCK_FREQ			100000000
 #define UART_BAUDRATE			115200
@@ -128,6 +133,16 @@
 						OSPI0_BASE_ADDR, 	\
 						OSPI0_SIZE,             \
 						MT_DEVICE | MT_RW | MT_SECURE)
+
+#if HYPRAM_EN
+/* Map 4MB for copying the DTB */
+#define HYPERRAM_BASE_ADDR		(0xA0000000)
+#define HYPERRAM_SIZE			(0x400000)
+#define MAP_HYPERRAM			MAP_REGION_FLAT(		\
+					HYPERRAM_BASE_ADDR,		\
+					HYPERRAM_SIZE,			\
+					MT_MEMORY | MT_RW | MT_SECURE)
+#endif
 
 #define AES0_BASE_ADDR			(0x83001000)
 #define AES0_SIZE			(0x1000)
