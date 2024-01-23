@@ -55,7 +55,7 @@
 /* The first 4KB of Trusted SRAM are used as shared memory */
 #ifdef PLAT_ARM_CORSTONE700
 #ifndef ARM_TRUSTED_SRAM_BASE
-#define ARM_TRUSTED_SRAM_BASE		UL(0x02000000)
+#define ARM_TRUSTED_SRAM_BASE		UL(0x08000000)
 #endif /* !ARM_TRUSTED_SRAM_BASE */
 #if BL32_IN_XIP_MEM
 #ifndef BL32_XIP_BASE
@@ -67,7 +67,7 @@
 #define ARM_TRUSTED_SRAM_BASE		UL(0x04000000)
 #endif
 #define ARM_SHARED_RAM_BASE		ARM_TRUSTED_SRAM_BASE
-#define ARM_SHARED_RAM_SIZE		UL(0x00001000)	/* 4 KB */
+#define ARM_SHARED_RAM_SIZE		UL(0x00008000)	/* 32 KB */
 
 /* The remaining Trusted SRAM is used to load the BL images */
 #define ARM_BL_RAM_BASE			(ARM_SHARED_RAM_BASE +	\

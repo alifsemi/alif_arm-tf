@@ -66,7 +66,7 @@
  * ASSERT: lib/xlat_tables_v2/xlat_tables_core.c:97 */
 # define MAX_XLAT_TABLES                12
 
-#define PLAT_ARM_TRUSTED_SRAM_SIZE	UL(0x00040000)  /* 256 KB */
+#define PLAT_ARM_TRUSTED_SRAM_SIZE	UL(0x00020000)  /* 128 KB */
 
 /* The remaining Trusted SRAM is used to load the BL images */
 #define ARM_BL_RAM_BASE			(ARM_SHARED_RAM_BASE +  \
