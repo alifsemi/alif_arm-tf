@@ -61,10 +61,10 @@
 #define PSYSR_PC		BIT_32(27)
 #define PSYSR_PP		BIT_32(26)
 
-# define PLAT_ARM_MMAP_ENTRIES          12
+# define PLAT_ARM_MMAP_ENTRIES          13
 /* Set MAX_XLAT_TABLES to 12 in order to solve assertion failure at
  * ASSERT: lib/xlat_tables_v2/xlat_tables_core.c:97 */
-# define MAX_XLAT_TABLES                12
+# define MAX_XLAT_TABLES                13
 
 #define PLAT_ARM_TRUSTED_SRAM_SIZE	UL(0x00020000)  /* 128 KB */
 
@@ -123,7 +123,7 @@
 #define UART_BAUDRATE			115200
 
 #define UART_MAP_DEVICE			MAP_REGION_FLAT(		\
-						UART_BASE_ADDR, 	\
+						UART_BASE_ADDR,		\
 						UART_SIZE,              \
 						MT_DEVICE | MT_RW | MT_SECURE)
 
@@ -133,6 +133,12 @@
 						OSPI0_BASE_ADDR, 	\
 						OSPI0_SIZE,             \
 						MT_DEVICE | MT_RW | MT_SECURE)
+
+#define LPGPIO_MAP_DEVICE		MAP_REGION_FLAT(		\
+						0x42002000,		\
+						0x1000,			\
+						MT_DEVICE | MT_RW | MT_SECURE)
+
 
 #if HYPRAM_EN
 /* Map 4MB for copying the DTB */
