@@ -227,6 +227,9 @@ void sp_min_plat_arch_setup(void)
 #if USE_COHERENT_MEM
 		ARM_MAP_BL_COHERENT_RAM,
 #endif
+#if MODEM_SRAM
+		MAP_SRAM6B,
+#endif
 		MAP_SRAM0,
 #if HYPRAM_EN
 		MAP_HYPERRAM,

@@ -1,4 +1,4 @@
-/* Copyright (C) 2023 Alif Semiconductor - All Rights Reserved.
+/* Copyright (C) 2024 Alif Semiconductor - All Rights Reserved.
  * Use, distribution and modification of this code is permitted under the
  * terms stated in the Alif Semiconductor Software License Agreement
  *
@@ -10,4 +10,5 @@
 #ifndef SOC_DEVKIT_H
 #define SOC_DEVKIT_H
 void configure_devkit_uart_pinmux_padconf(void);
+void configure_modem_sram(void);
 #endif /* SOC_DEVKIT_H */

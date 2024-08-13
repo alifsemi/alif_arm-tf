@@ -7,6 +7,7 @@
 $(eval $(call add_define,AES_EN))
 $(eval $(call add_define,FLASH_EN))
 $(eval $(call add_define,HYPRAM_EN))
+$(eval $(call add_define,MODEM_SRAM))
 $(eval $(call add_define,UART))
 
 ifeq "1" "${AES_EN}"

@@ -61,12 +61,22 @@
 #define PSYSR_PC		BIT_32(27)
 #define PSYSR_PP		BIT_32(26)
 
-# define PLAT_ARM_MMAP_ENTRIES          13
+/* MODEM SRAM Power Control */
+#define PWR_CTRL		UL(0x1A60A004)
+#define MDM_PWR_CTRL		UL(0x1A60B004)
+#define MDM_CLK_SEL		UL(0x1A605040)
+#define MDM_CPU_CTRL		UL(0x1A605048)
+#define MDM_PD_CLK_PLL		UL(0x1A60504C)
+
+# define PLAT_ARM_MMAP_ENTRIES          18
 /* Set MAX_XLAT_TABLES to 12 in order to solve assertion failure at
  * ASSERT: lib/xlat_tables_v2/xlat_tables_core.c:97 */
 # define MAX_XLAT_TABLES                13
-
+#if MODEM_SRAM
+#define PLAT_ARM_TRUSTED_SRAM_SIZE	UL(0x00029000)  /* 164 KB */
+#else
 #define PLAT_ARM_TRUSTED_SRAM_SIZE	UL(0x00028000)  /* 160 KB */
+#endif
 
 /* The remaining Trusted SRAM is used to load the BL images */
 #define ARM_BL_RAM_BASE			(ARM_SHARED_RAM_BASE +  \
@@ -108,6 +118,16 @@
 #define UART_BASE_ADDR			(0x4901A000)
 #else
 #error "Set UART with an appropriate value. Example: Either 2 or 4."
+#endif
+
+#if MODEM_SRAM
+/* Map SRAM-6B 1MB */
+#define SRAM6B_BASE_ADDR		(0x62400000)
+#define SRAM6B_SIZE			(0x100000)
+#define MAP_SRAM6B			MAP_REGION_FLAT(		\
+					SRAM6B_BASE_ADDR,		\
+					SRAM6B_SIZE,			\
+					MT_MEMORY | MT_RW | MT_SECURE)
 #endif
 
 /* Map 4MB */
@@ -186,7 +206,12 @@
 
 /* SRAM0 memory 0x02380000 - 0x02380FFF is used for MHU0 */
 /* communication with SE.*/
+#if MODEM_SRAM
+#define MHU0_PAYLOAD_ADDR                       0x08020000
+#else
 #define MHU0_PAYLOAD_ADDR                       0x02380000
+#endif
+
 #define MHU0_PAYLOAD_MAP                MAP_REGION_FLAT(		\
 						MHU0_PAYLOAD_ADDR,	\
 						0x1000,			\

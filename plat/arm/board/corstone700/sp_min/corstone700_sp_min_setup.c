@@ -9,6 +9,7 @@
 
 extern int init_nor_flash(void);
 extern int init_ospi_hyperram(void);
+extern void configure_modem_sram();
 
 void plat_arm_sp_min_early_platform_setup(u_register_t arg0, u_register_t arg1,
 			u_register_t arg2, u_register_t arg3)
@@ -16,5 +17,8 @@ void plat_arm_sp_min_early_platform_setup(u_register_t arg0, u_register_t arg1,
 	arm_sp_min_early_platform_setup((void *)arg0, arg1, arg2, (void *)arg3);
 #if HYPRAM_EN
 	init_ospi_hyperram();
+#endif
+#if MODEM_SRAM
+	configure_modem_sram();
 #endif
 }
