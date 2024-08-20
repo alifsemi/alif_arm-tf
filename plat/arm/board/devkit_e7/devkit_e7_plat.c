@@ -1,4 +1,4 @@
-/* Copyright (C) 2023 Alif Semiconductor - All Rights Reserved.
+/* Copyright (C) 2024 Alif Semiconductor - All Rights Reserved.
  * Use, distribution and modification of this code is permitted under the
  * terms stated in the Alif Semiconductor Software License Agreement
  *
@@ -70,4 +70,29 @@ void delay_in_us(uint32_t delay)
 		/* Update latest counter value */
 		pre_timestamp = cur_timestamp;
 	}
+}
+
+/* @brief - Configure MODEM SRAM sections to enable linux boot. */
+void configure_modem_sram()
+{
+	uint32_t value;
+	/* Enable Power for Modem AON domain */
+	value = mmio_read_32(PWR_CTRL);
+	mmio_write_32(PWR_CTRL, (value | 1));
+
+	/* Select 160 MHz PLL for modem domain */
+	mmio_write_32(MDM_CLK_SEL, 3);
+
+	/* Switch to PLL */
+	mmio_write_32(MDM_PD_CLK_PLL, 1);
+
+	/* Bypass Modem and GPS CM55 power P/Q channels */
+	value = mmio_read_32(MDM_PWR_CTRL);
+	mmio_write_32(MDM_PWR_CTRL, (value | 0x110));
+
+	/* Wake up the modem domain */
+	value = mmio_read_32(MDM_CPU_CTRL);
+	mmio_write_32(MDM_CPU_CTRL, (value | 0x1000));
+
+	INFO("Modem SRAM setup complete\n");
 }
