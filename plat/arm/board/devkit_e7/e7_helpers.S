@@ -41,6 +41,7 @@ func wfi_loop
 		mrrc    15, 1, r0, r1, cr15
 		bic     r0, r0, #0x40 		/* Disable SMP_EN bit in CPUECTLR reg */
 		mcrr    15, 1, r0, r1, cr15
+		dsb sy
 wfi_lp:		mov r0,r0
 		wfi
 		b	wfi_lp
@@ -82,4 +83,3 @@ func plat_is_my_cpu_primary
 	movne	r0, #0
 	bx	lr
 endfunc plat_is_my_cpu_primary
-

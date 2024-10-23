@@ -20,6 +20,10 @@
 
 #include "../drivers/arm/gic/v3/gicv3_private.h"
 
+#define HOST_BASE_SYS_CTRL              0x1A010000
+#define HOST_CPU_BOOT_MSK               0x300
+#define HOST_CPU_WAKEUP                 0x308
+
 #if ARM_RECOM_STATE_ID_ENC
 /*
  *  The table storing the valid idle power states. Ensure that the
@@ -66,11 +70,8 @@ static int ensemble_pwr_domain_on(u_register_t mpidr)
 	int rc = PSCI_E_SUCCESS;
 	unsigned int cpu = mpidr, val;
 
-#define HOST_BASE_SYS_CTRL              0x1A010000
 #define PE_CONFIG(cpu)                  ((cpu) * 0x10 + 0x0)
 #define PE_RVBARADDR_LW(cpu)            ((cpu) * 0x10 + 0x4)
-#define HOST_CPU_BOOT_MSK               0x300
-#define HOST_CPU_WAKEUP                 0x308
 
 	/* Set the flag so that core jumps to sp_min_warm_boot */
 	secondary_cpu_flags[cpu - 1] = 0x000ADD;
@@ -106,6 +107,42 @@ static void ensemble_pwr_domain_on_finish(const psci_power_state_t *target_state
 	plat_arm_gic_cpuif_enable();
 }
 
+static void ensemble_pwr_domain_off(const psci_power_state_t *target_state)
+{
+	int cpu_idx = (int) plat_my_core_pos();
+	u_register_t val;
+
+	(void)(target_state);
+
+	val = mmio_read_32(HOST_BASE_SYS_CTRL + HOST_CPU_WAKEUP);
+	val &= ~(1 << cpu_idx);
+	mmio_write_32(HOST_BASE_SYS_CTRL + HOST_CPU_WAKEUP, val);
+
+	dsb();
+}
+
+extern void psci_do_pwrdown_sequence(unsigned int power_level);
+static void __dead2 ensemble_system_off(void)
+{
+	u_register_t dbgosdlr;
+
+	dbgosdlr = read_dbgosdlr();
+	dbgosdlr =  dbgosdlr | 0x1;
+	write_dbgosdlr(dbgosdlr);
+
+	/* Prevent interrupts from spuriously waking up this cpu */
+	plat_arm_gic_cpuif_disable();
+
+	/*
+	 * Arch. management. Initiate power down sequence.
+	 */
+	psci_do_pwrdown_sequence(PLAT_MAX_OFF_STATE);
+
+	ensemble_pwr_domain_off(NULL);
+
+	psci_power_down_wfi();
+}
+
 /*******************************************************************************
  * Export the platform handlers via plat_arm_psci_pm_ops. The ARM Standard
  * platform layer will take care of registering the handlers with PSCI.
@@ -113,6 +150,8 @@ static void ensemble_pwr_domain_on_finish(const psci_power_state_t *target_state
 plat_psci_ops_t plat_arm_psci_pm_ops = {
 	.pwr_domain_on = ensemble_pwr_domain_on,
 	.pwr_domain_on_finish = ensemble_pwr_domain_on_finish,
+	.pwr_domain_off = ensemble_pwr_domain_off,
+	.system_off = ensemble_system_off
 };
 
 const plat_psci_ops_t *plat_arm_psci_override_pm_ops(plat_psci_ops_t *ops)
