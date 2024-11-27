@@ -569,6 +569,9 @@
 #define ICC_ASGI1R_EL1_64	p15, 1, c12
 #define ICC_SGI0R_EL1_64	p15, 2, c12
 
+/* 64 bit CPU Extended Control register defines*/
+#define CPUECTLR_64	p15, 1, c15
+
 /*******************************************************************************
  * Definitions of MAIR encodings for device and normal memory
  ******************************************************************************/
